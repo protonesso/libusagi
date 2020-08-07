@@ -96,7 +96,7 @@ void create_package(const char *out, const char **file) {
 	a = archive_write_new();
 	archive_write_add_filter_zstd(a);
 	archive_write_set_format_mtree(a);
-	archive_write_set_options(a, "compression-level=19,all");
+	archive_write_set_options(a, "all");
 	archive_write_open_filename(a, out);
 
 	while (*file) {
