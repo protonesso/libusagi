@@ -16,17 +16,17 @@
 /* FROM https://github.com/libarchive/libarchive/wiki/Examples#A_Complete_Extractor */
 int copy_data(struct archive *ar, struct archive *aw) {
 	int r;
-	const void *bufff;
+	const void *buff;
 	size_t size;
 	la_int64_t offset;
 
 	for (;;) {
-		r = archive_read_data_block(ar, &bufff, &size, &offset);
+		r = archive_read_data_block(ar, &buff, &size, &offset);
 		if (r == ARCHIVE_EOF)
 			return (ARCHIVE_OK);
 		if (r < ARCHIVE_OK)
 			return (r);
-		r = archive_write_data_block(aw, bufff, size, offset);
+		r = archive_write_data_block(aw, buff, size, offset);
 		if (r < ARCHIVE_OK) {
 			fprintf(stderr, "Failed to extract package: %s\n", archive_error_string(aw));
 			return (r);

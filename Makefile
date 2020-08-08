@@ -1,7 +1,6 @@
 CC ?= cc
 AR ?= ar
-XFLAGS = -fPIC
-LDADD = -larchive
+XFLAGS = -fPIC -larchive
 
 SOURCES = src/archive.c src/database.c src/utils.c
 
@@ -20,16 +19,16 @@ static: $(OBJECTS)
 	$(AR) rcs $(LIBRARY_STATIC) $(OBJECTS)
 
 shared: $(OBJECTS)
-	$(CC) $(CCFLAGS) $(LDFLAGS) -shared $(OBJECTS) -o $(LIBRARY)
+	$(CC) $(XFLAGS) $(CFLAGS) $(LDFLAGS) -shared $(OBJECTS) -o $(LIBRARY)
 
 src/archive.o: src/archive.c
-	$(CC) $(CCFLAGS) -c src/archive.c -o src/archive.o
+	$(CC) $(CFLAGS) -c src/archive.c -o src/archive.o
 
 src/database.o: src/database.c
-	$(CC) $(CCFLAGS) -c src/database.c -o src/database.o
+	$(CC) $(CFLAGS) -c src/database.c -o src/database.o
 
 src/utils.o: src/utils.c
-	$(CC) $(CCFLAGS) -c src/utils.c -o src/utils.o
+	$(CC) $(CFLAGS) -c src/utils.c -o src/utils.o
 
 clean:
 	rm $(LIBRARY) $(LIBRARY_STATIC) $(OBJECTS) || true
