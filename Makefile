@@ -1,4 +1,5 @@
 CC = gcc
+AR = ar
 CCFLAGS = -fPIC
 LDFLAGS = -lzstd
 
@@ -8,12 +9,17 @@ OBJECTS = src/archive.o src/database.o src/utils.o
 
 LIBRARY = lib/libusagi.so
 
-all: dirs $(LIBRARY)
+LIBRARY_STATIC = lib/libusagi.a
+
+all: dirs shared static
 
 dirs:
 	mkdir lib || true
 
-$(LIBRARY): $(OBJECTS)
+static: $(OBJECTS)
+	$(AR) rcs $(LIBRARY_STATIC) $(OBJECTS)
+
+shared: $(OBJECTS)
 	$(CC) $(CCFLAGS) $(LDFLAGS) -shared $(OBJECTS) -o $(LIBRARY)
 
 src/archive.o: src/archive.c
@@ -26,5 +32,5 @@ src/utils.o: src/utils.c
 	$(CC) $(CCFLAGS) -c src/utils.c -o src/utils.o
 
 clean:
-	rm $(LIBRARY) $(OBJECTS) || true
+	rm $(LIBRARY) $(LIBRARY_STATIC) $(OBJECTS) || true
 	rmdir lib || true
