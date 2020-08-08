@@ -1,6 +1,6 @@
 #include "utils.h"
 
-void umsg(unsigned char state,const char *msg, ...) {
+void umsg(unsigned char state, const char *msg, ...) {
 	char *status;
 
 	switch (state) {
